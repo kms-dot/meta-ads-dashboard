@@ -13,7 +13,10 @@
       "Bash(git init:*)",
       "Bash(git add:*)",
       "Bash(git reset:*)",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: Meta 광고 레퍼런스 수집 시스템\n\n- 쇼핑몰 크롤러 \\(네이버, 쿠팡, 올리브영\\)\n- Meta 광고 라이브러리 크롤러\n- Supabase 데이터베이스 연동\n- Next.js 대시보드\n- GitHub Actions 자동화 설정\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: Meta 광고 레퍼런스 수집 시스템\n\n- 쇼핑몰 크롤러 \\(네이버, 쿠팡, 올리브영\\)\n- Meta 광고 라이브러리 크롤러\n- Supabase 데이터베이스 연동\n- Next.js 대시보드\n- GitHub Actions 자동화 설정\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git config:*)",
+      "Bash(python:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
