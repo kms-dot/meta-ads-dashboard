@@ -1,0 +1,82 @@
+{
+  "categories": {
+    "뷰티디바이스": {
+      "product_types": [
+        "디바이스", "기기", "미용기기", "피부관리기기", "홈케어기기",
+        "모공디바이스", "리프팅디바이스", "LDM디바이스",
+        "LED마스크", "갈바닉", "고주파기기", "레이저기기",
+        "클렌징기기", "피부재생기기"
+      ],
+      "function_keywords": [],
+      "user_brands": [
+        "EOA", "풀쎄라", "풀텐자", "톰더글로우시그니처",
+        "쿼드쎄라", "메디큐브에이지알", "메디큐브부스터프로"
+      ],
+      "crawl_platforms": ["naver", "coupang", "oliveyoung"],
+      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010014"
+    },
+    "스킨케어": {
+      "product_types": [
+        "크림", "앰플", "세럼", "에센스", "패치",
+        "클렌징오일", "클렌징폼", "토너", "아이크림"
+      ],
+      "function_keywords": [
+        "탄력", "리프팅", "기미", "주름", "팔자주름", "미간주름",
+        "미백", "보습", "진정", "재생", "안티에이징"
+      ],
+      "user_brands": [],
+      "crawl_platforms": ["naver", "coupang", "oliveyoung"],
+      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010001"
+    },
+    "헤어케어": {
+      "product_types": [
+        "탈모샴푸", "지루성두피샴푸", "두피샴푸",
+        "트리트먼트", "헤어에센스", "헤어앰플",
+        "고데기", "헤어아이롱", "드라이기", "스타일러"
+      ],
+      "function_keywords": [
+        "탈모", "모발성장", "볼륨", "두피케어"
+      ],
+      "user_brands": [],
+      "crawl_platforms": ["naver", "coupang", "oliveyoung"],
+      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010009"
+    },
+    "생활용품": {
+      "product_types": [
+        "곰팡이제거제", "습기제거제", "세제", "탈취제",
+        "욕실용품", "주방용품", "청소용품",
+        "경추베개", "거북목베개", "라텍스베개", "양모베개",
+        "메모리폼베개", "매트리스", "침대", "토퍼", "침구"
+      ],
+      "function_keywords": [],
+      "user_brands": [],
+      "crawl_platforms": ["naver", "coupang"],
+      "oliveyoung_url": null
+    },
+    "건강기능식품": {
+      "product_types": [
+        "다이어트", "다이어트보조제", "다이어트영양제",
+        "수면영양제", "키성장",
+        "먹는콜라겐", "글루타치온", "오메가3",
+        "비타민", "유산균", "소화효소", "비문증영양제",
+        "밀크씨슬", "루테인", "프로바이오틱스"
+      ],
+      "function_keywords": [],
+      "user_brands": [
+        "여에스더", "여에스더글루타치온", "플로리브", "칼로커트",
+        "셀리트", "닥터블릿", "소우코우", "이소비텍신",
+        "푸드올로지", "푸드올로지빨간통", "푸드올로지파란통"
+      ],
+      "crawl_platforms": ["naver", "coupang"],
+      "oliveyoung_url": null
+    }
+  },
+  "settings": {
+    "max_products_per_keyword": 100,
+    "top_brands_count": 50,
+    "search_keywords_limit": 5,
+    "crawl_delay_min": 3,
+    "crawl_delay_max": 7,
+    "max_retry": 3
+  }
+}

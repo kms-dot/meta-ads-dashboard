@@ -1,0 +1,72 @@
+{
+  "selectors": {
+    "ad_card": [
+      "div[class*='x1n2onr6']",
+      "div[data-testid='ad-card']",
+      "div[aria-label*='광고']",
+      "div.ad-card",
+      "div._8n_f"
+    ],
+    "advertiser": [
+      "span[class*='advertiser']",
+      "a[href*='/ads/library/?active_status']",
+      "div[class*='_7jyr'] a",
+      "span._7jyr",
+      "div._4ik4 span"
+    ],
+    "thumbnail": [
+      "img[class*='img']",
+      "video[class*='video']",
+      "img[alt]",
+      "div[style*='background-image'] img",
+      "img._8jmf",
+      "video._8jmf"
+    ],
+    "impression": [
+      "div[class*='impression']",
+      "span[class*='impression']",
+      "div:contains('노출수')",
+      "div._7jyr div._99lh"
+    ],
+    "start_date": [
+      "div[class*='date']",
+      "span[class*='date']",
+      "div:contains('게재 시작')",
+      "div._7jyr div._99lh"
+    ],
+    "ad_link": [
+      "a[href*='/ads/library/?id=']",
+      "a[data-testid='ad-link']",
+      "a[aria-label*='광고']",
+      "a._8fzi"
+    ],
+    "ad_text": [
+      "div[class*='_7jyr']",
+      "div[data-testid='ad-text']",
+      "div._4ik4",
+      "div.ad-creative-body"
+    ],
+    "platform": [
+      "div[class*='platform']",
+      "span[class*='platform']",
+      "div:contains('플랫폼')",
+      "div._7jyr div"
+    ]
+  },
+  "filter_keywords": {
+    "low_impression": ["적음", "low", "fewer", "less"],
+    "active_status": ["게재 중", "active", "running", "live"],
+    "inactive_status": ["종료", "ended", "inactive", "stopped"]
+  },
+  "date_patterns": {
+    "korean": "(?P<year>\\d{4})년\\s*(?P<month>\\d{1,2})월\\s*(?P<day>\\d{1,2})일",
+    "english": "(?P<month>\\w+)\\s+(?P<day>\\d{1,2}),\\s*(?P<year>\\d{4})",
+    "iso": "(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})"
+  },
+  "scroll_settings": {
+    "max_scrolls": 50,
+    "scroll_pause": 2,
+    "max_retries": 3,
+    "page_load_timeout": 10
+  }
+}

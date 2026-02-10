@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment
+.env
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output (keep folder, ignore contents)
+output/*.json
+output/*.csv
+!output/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Meta Output
+meta_output/
+*.json.backup
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Chrome Driver
+chromedriver
+chromedriver.exe
+
+# Secrets
+secrets/
+credentials/
+*.key
+*.pem
+
+# Windows reserved names
+nul
+NUL
