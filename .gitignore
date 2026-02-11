@@ -33,9 +33,14 @@ output/*.csv
 *.log
 logs/
 
-# Meta Output
-meta_output/
+# Meta Output (keep filtered data for dashboard)
+meta_output/*.log
+meta_output/html_dumps/
+meta_output/analyzed_cards/
+meta_output/test_results/
 *.json.backup
+# Allow filtered JSON for deployment
+!meta_output/meta_all_categories_filtered_*.json
 
 # Database files
 *.db

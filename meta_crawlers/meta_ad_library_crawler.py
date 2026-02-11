@@ -16,9 +16,24 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
         super().__init__(config)
         self.platform_name = "meta_ad_library"
 
+        # 최종 셀렉터 로드
+        self._load_final_selectors()
+
         # 필터 키워드 로드
         self.filter_keywords = self._load_filter_keywords()
         self.date_patterns = self._load_date_patterns()
+
+    def _load_final_selectors(self):
+        """최종 셀렉터 설정 로드"""
+        import json
+        try:
+            with open('config/meta_selectors_final.json', 'r', encoding='utf-8') as f:
+                config = json.load(f)
+                # 기존 selectors 덮어쓰기
+                self.selectors = config.get('selectors', {})
+                self.logger.info("최종 셀렉터 설정 로드 완료")
+        except Exception as e:
+            self.logger.warning(f"최종 셀렉터 로드 실패, 기존 설정 사용: {e}")
 
     def _load_filter_keywords(self) -> Dict:
         """필터 키워드 로드"""
@@ -38,12 +53,13 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
         """날짜 패턴 로드"""
         import json
         try:
-            with open('config/meta_selectors.json', 'r', encoding='utf-8') as f:
+            with open('config/meta_selectors_final.json', 'r', encoding='utf-8') as f:
                 config = json.load(f)
                 return config.get('date_patterns', {})
         except:
             return {
-                'korean': r'(?P<year>\d{4})년\s*(?P<month>\d{1,2})월\s*(?P<day>\d{1,2})일',
+                'korean': r'(?P<year>\d{4})\.\s*(?P<month>\d{1,2})\.\s*(?P<day>\d{1,2})\.',
+                'korean_alt': r'(?P<year>\d{4})년\s*(?P<month>\d{1,2})월\s*(?P<day>\d{1,2})일',
                 'english': r'(?P<month>\w+)\s+(?P<day>\d{1,2}),\s*(?P<year>\d{4})',
                 'iso': r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})'
             }
@@ -61,6 +77,10 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
             광고 데이터 리스트
         """
         self.logger.info(f"Meta 광고 라이브러리 크롤링 시작: {query}")
+
+        # 드라이버 초기화 (아직 초기화되지 않은 경우)
+        if not self.driver:
+            self.start()
 
         # URL 생성
         search_url = self._build_search_url(query, country)
@@ -106,18 +126,29 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
                     if not ad_info:
                         continue
 
-                    # 중복 체크 (광고 링크 기준)
-                    if any(ad.get('ad_library_url') == ad_info.get('ad_library_url') for ad in ads_data):
+                    # 중복 체크 (컨텐츠 기반)
+                    # ID가 달라도 광고주+텍스트+썸네일이 같으면 중복으로 판단
+                    is_duplicate = False
+                    for existing_ad in ads_data:
+                        if (existing_ad.get('advertiser') == ad_info.get('advertiser') and
+                            existing_ad.get('ad_text') == ad_info.get('ad_text') and
+                            existing_ad.get('thumbnail_url') == ad_info.get('thumbnail_url')):
+                            is_duplicate = True
+                            break
+
+                    if is_duplicate:
+                        self.logger.debug(f"컨텐츠 중복 필터링: {ad_info.get('advertiser')}")
                         continue
 
-                    # 필터링
+                    # 필터링 1: 노출수 적음
                     if self.is_low_impression(ad_card):
                         self.logger.debug(f"노출수 적음 필터링: {ad_info.get('advertiser')}")
                         continue
 
-                    # 라이브 여부 확인 (선택사항)
-                    # if not self.is_active_ad(ad_card):
-                    #     continue
+                    # 필터링 2: 종료된 광고
+                    if not self.is_active_ad(ad_card):
+                        self.logger.debug(f"종료된 광고 필터링: {ad_info.get('advertiser')}")
+                        continue
 
                     # 데이터 추가
                     ad_info['query'] = query
@@ -189,23 +220,41 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
             info = {}
 
             # 광고주
+            # 먼저 텍스트로 시도
             advertiser = self.safe_get_text(ad_card, self.selectors.get('advertiser', []))
+
+            # 텍스트가 없으면 이미지 alt 속성에서 추출
+            if not advertiser:
+                advertiser = self.safe_get_attribute(ad_card, self.selectors.get('advertiser', []), 'alt')
+
             if not advertiser:
                 # 광고주는 필수 정보
+                self.logger.debug("광고주 정보 없음, 건너뜀")
                 return None
+
             info['advertiser'] = advertiser
 
-            # 광고 링크
-            ad_link = self.safe_get_attribute(ad_card, self.selectors.get('ad_link', []), 'href')
-            info['ad_library_url'] = ad_link if ad_link else ''
-
-            # 광고 ID 추출 (URL에서)
-            ad_id = self._extract_ad_id(ad_link)
+            # 라이브러리 ID (새로운 방식)
+            ad_library_id_text = self.safe_get_text(ad_card, self.selectors.get('ad_library_id', []))
+            ad_id = self._extract_ad_library_id(ad_library_id_text)
             info['ad_id'] = ad_id
+
+            # 광고 라이브러리 URL 생성 (ID 기반)
+            if ad_id:
+                info['ad_library_url'] = f"https://www.facebook.com/ads/library/?id={ad_id}"
+            else:
+                # Fallback: 광고 링크
+                ad_link = self.safe_get_attribute(ad_card, self.selectors.get('ad_link', []), 'href')
+                info['ad_library_url'] = ad_link if ad_link else ''
 
             # 썸네일/비디오
             thumbnail_info = self._extract_media(ad_card)
             info.update(thumbnail_info)
+
+            # 광고 크리에이티브 이미지 (추가)
+            creative_image_url = self.safe_get_attribute(ad_card, self.selectors.get('ad_creative_image', []), 'src')
+            if creative_image_url:
+                info['ad_creative_image_url'] = creative_image_url
 
             # 광고 텍스트
             ad_text = self.safe_get_text(ad_card, self.selectors.get('ad_text', []))
@@ -217,20 +266,30 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
 
             # 게재 시작일
             date_text = self.safe_get_text(ad_card, self.selectors.get('start_date', []))
-            info['start_date'] = date_text
+            info['start_date_raw'] = date_text
+
+            # 날짜 파싱 (새로운 패턴)
+            parsed_date = self._parse_date(date_text)
+            info['start_date'] = parsed_date
 
             # 라이브 일수 계산
             days_live = self.calculate_days_live(date_text)
             info['days_live'] = days_live
 
+            # 상태 (활성/비활성)
+            status_text = self.safe_get_text(ad_card, self.selectors.get('status', []))
+            info['status'] = status_text
+
             # 플랫폼 정보 (Facebook, Instagram 등)
-            platform_text = self.safe_get_text(ad_card, self.selectors.get('platform', []))
+            platform_text = self.safe_get_text(ad_card, self.selectors.get('platforms', []))
             info['platforms'] = self._parse_platforms(platform_text)
 
             return info
 
         except Exception as e:
             self.logger.debug(f"광고 정보 추출 오류: {e}")
+            import traceback
+            self.logger.debug(traceback.format_exc())
             return None
 
     def _extract_ad_id(self, ad_url: str) -> str:
@@ -245,11 +304,67 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
 
         return ""
 
+    def _extract_ad_library_id(self, id_text: str) -> str:
+        """라이브러리 ID 텍스트에서 ID 추출"""
+        if not id_text:
+            return ""
+
+        # 패턴: "라이브러리 ID: 123456789" 또는 "Library ID: 123456789"
+        match = re.search(r'ID[:\s]*(\d+)', id_text)
+        if match:
+            return match.group(1)
+
+        return ""
+
+    def _parse_date(self, date_text: str) -> str:
+        """날짜 텍스트 파싱"""
+        if not date_text:
+            return ""
+
+        # 새로운 한국어 패턴: 2025. 8. 29.
+        pattern = r'(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.'
+        match = re.search(pattern, date_text)
+
+        if match:
+            year = int(match.group(1))
+            month = int(match.group(2))
+            day = int(match.group(3))
+            return f"{year}-{month:02d}-{day:02d}"
+
+        # Fallback: 기존 패턴들 시도
+        for pattern_name, pattern in self.date_patterns.items():
+            try:
+                match = re.search(pattern, date_text)
+                if match:
+                    groups = match.groupdict()
+                    if 'year' in groups and 'month' in groups and 'day' in groups:
+                        year = int(groups['year'])
+                        month_str = groups['month']
+
+                        # 월 이름 처리
+                        if month_str.isdigit():
+                            month = int(month_str)
+                        else:
+                            month_map = {
+                                'january': 1, 'february': 2, 'march': 3, 'april': 4,
+                                'may': 5, 'june': 6, 'july': 7, 'august': 8,
+                                'september': 9, 'october': 10, 'november': 11, 'december': 12
+                            }
+                            month = month_map.get(month_str.lower(), 1)
+
+                        day = int(groups['day'])
+                        return f"{year}-{month:02d}-{day:02d}"
+            except:
+                continue
+
+        return date_text  # 파싱 실패 시 원본 반환
+
     def _extract_media(self, ad_card) -> Dict:
-        """미디어 정보 추출 (썸네일, 비디오)"""
+        """미디어 정보 추출 (썸네일, 비디오, 추가 이미지 소스)"""
         media_info = {
             'thumbnail_url': '',
             'video_url': '',
+            'video_poster_url': '',
             'media_type': 'unknown'
         }
 
@@ -264,8 +379,26 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
                 media_info['media_type'] = 'image'
             elif tag_name == 'video':
                 media_info['video_url'] = media_elem.get_attribute('src') or ''
-                media_info['thumbnail_url'] = media_elem.get_attribute('poster') or ''
+                # 비디오 포스터 이미지 (썸네일)
+                poster = media_elem.get_attribute('poster') or ''
+                media_info['video_poster_url'] = poster
+                media_info['thumbnail_url'] = poster  # 비디오의 경우 포스터를 썸네일로
                 media_info['media_type'] = 'video'
+        
+        # 추가 이미지 소스 탐색 (img 태그들)
+        if not media_info['thumbnail_url']:
+            try:
+                # 광고 카드 내의 모든 img 태그 탐색
+                img_elements = ad_card.find_elements(By.TAG_NAME, 'img')
+                for img in img_elements:
+                    src = img.get_attribute('src') or ''
+                    # Facebook CDN 이미지만 선택
+                    if src and 'fbcdn.net' in src and not 'emoji' in src.lower():
+                        media_info['thumbnail_url'] = src
+                        media_info['media_type'] = 'image'
+                        break
+            except:
+                pass
 
         return media_info
 
@@ -361,8 +494,24 @@ class MetaAdLibraryCrawler(BaseFacebookCrawler):
         if not start_date_text:
             return 0
 
-        # 한국어 날짜 패턴
-        korean_pattern = self.date_patterns.get('korean', r'(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일')
+        # 새로운 한국어 패턴: 2025. 8. 29.
+        pattern = r'(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.'
+        match = re.search(pattern, start_date_text)
+
+        if match:
+            year = int(match.group(1))
+            month = int(match.group(2))
+            day = int(match.group(3))
+
+            try:
+                start_date = datetime(year, month, day)
+                days_live = (datetime.now() - start_date).days
+                return max(0, days_live)
+            except ValueError:
+                return 0
+
+        # 기존 한국어 패턴: 2025년 8월 29일
+        korean_pattern = self.date_patterns.get('korean_alt', r'(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일')
         match = re.search(korean_pattern, start_date_text)
 
         if match:
