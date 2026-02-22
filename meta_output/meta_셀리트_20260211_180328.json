@@ -1,0 +1,29 @@
+{
+  "query": "셀리트",
+  "total_ads": 1,
+  "unique_ads": 1,
+  "crawl_date": "2026-02-11T18:03:28.306843",
+  "elapsed_seconds": 16.914174,
+  "ads": [
+    {
+      "advertiser": "hello_one_meal",
+      "ad_id": "1246426934038215",
+      "ad_library_url": "https://www.facebook.com/ads/library/?id=1246426934038215",
+      "thumbnail_url": "https://scontent-icn2-1.cdninstagram.com/v/t51.2885-19/448454935_1827636367648065_5892291359775299701_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=100&ccb=7-5&_nc_sid=525117&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=X9yiRicyLVwQ7kNvwHNLLzY&_nc_oc=AdmvIjgan82dGys5WYdGU_-YD48d3l58QfVrIHi461C-_qfhYYBiUC4bS_RCJOh7gU0&_nc_zt=24&_nc_ht=scontent-icn2-1.cdninstagram.com&oh=00_AftuLGp_oIWpyPxXKs9JlD4EXHtH67gGER4BCD-m58WF6g&oe=6992037C",
+      "video_url": "",
+      "media_type": "image",
+      "ad_creative_image_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/625965657_965388215822322_4443709890825224816_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=104&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=-JLBKkFwC2EQ7kNvwH2FCgX&_nc_oc=AdnVZmk1HQpToFDWCaU8KgMxTxfQYmZUpuedEwrKOqiTlgZ5crhLqZ0yJR_kMQWgzZo&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=j4xZugsCoJPkmxFTWv4A3w&oh=00_AftXNZtNhe3kmx_u17CJ7Gz3he6XOBfCyV00buI_GiDj3Q&oe=6992000E",
+      "ad_text": "🍱 2월 2주 안녕한끼 메뉴를 공개합니다!\n\n✅ 2/9 (월)\n\n🍱 도시락\n백미밥\n꽈리간장불고기\n얼갈이된장무침\n볼어묵조림\n봄동겉절이\n감자샐러드\n햄계란전\n배추된장국\n\n🥗 샐러드- 두부튀김포케샐러드 (오리엔탈D)\n\n✅ 2/10 (화)\n\n🍱 도시락\n영양콩나물밥\n너비아니구이\n배추김치\n참나물두부무침\n실파무생채\n총알버섯볶음\n얼큰소고기뭇국\n\n🥗 샐러드- 브런치샐러드 (사우전드아일랜드D)\n\n✅ 2/11 (수)\n\n🍱 도시락\n찰현미밥\n포항식닭보쌈&파채\n깍두기\n오뎅볶음\n마라두부면볶음\n메추리알곤약조림\n군만두\n얼큰콩나물국\n\n🥗 샐러드- 새우튀김또띠아랩 +샐러드\n\n✅ 2/12 (목)\n\n🍱 도시락\n백미밥\n칠리새우/탕수육\n매콤꼬들단무지\n햄버섯굴소스볶음\n마늘쫑건새우볶음\n단호박샐러드\n조미김\n짬뽕국\n\n🥗 샐러드- 매콤불고기포케샐러드 (렌치D)\n\n✅ 2/13 (금)\n\n🍱 도시락\n수제비빔밥\n비빔나물 6종\n과일음료\n\n🥗 샐러드- 치킨텐더샐러드 (허니머스타드D)",
+      "impression_text": "",
+      "start_date_raw": "2026. 2. 6.에 게재 시작함",
+      "start_date": "2026-02-06",
+      "days_live": 5,
+      "status": "활성",
+      "platforms": [],
+      "query": "셀리트",
+      "platform": "meta_ad_library",
+      "rank": 1,
+      "crawl_date": "2026-02-11T18:03:17.185550"
+    }
+  ]
+}

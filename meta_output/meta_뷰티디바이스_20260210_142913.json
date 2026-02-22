@@ -1,0 +1,103 @@
+{
+  "category": "뷰티디바이스",
+  "crawl_date": "2026-02-10T14:29:13.223857",
+  "queries": [
+    "메디큐브",
+    "EOA",
+    "뷰티디바이스",
+    "리프팅"
+  ],
+  "country": "KR",
+  "total_ads": 2,
+  "results_by_query": {
+    "메디큐브": {
+      "query": "메디큐브",
+      "total_ads": 2,
+      "crawl_date": "2026-02-10T13:45:12.586647"
+    },
+    "뷰티디바이스": {
+      "query": "뷰티디바이스",
+      "total_ads": 0,
+      "crawl_date": "2026-02-10T14:29:10.855098"
+    },
+    "리프팅": {
+      "query": "리프팅",
+      "total_ads": 0,
+      "crawl_date": "2026-02-10T14:29:11.067759"
+    }
+  },
+  "overall_analysis": {
+    "summary": {
+      "total_ads": 2,
+      "unique_advertisers": 1,
+      "avg_days_live": 0,
+      "media_type_counts": {
+        "image": 2
+      },
+      "platform_counts": {}
+    },
+    "advertiser_stats": [
+      {
+        "advertiser": "bit.ly/3AP0Nz5",
+        "ad_count": 2,
+        "total_days_live": 0,
+        "avg_days_live": 0.0,
+        "media_types": {
+          "image": 2
+        },
+        "platforms": {},
+        "ads": [
+          {
+            "ad_id": "",
+            "ad_text": "✨메디큐브 부스터프로미니✨\n지금 올리브영에서 특별 혜택가로 만나보세요!\n1등 뷰티디바이스 할인",
+            "days_live": 0,
+            "url": "https://www.facebook.com/ads/library/report/?source=nav-header"
+          },
+          {
+            "ad_id": "",
+            "ad_text": "✨메디큐브 부스터프로미니✨\n지금 올리브영에서 특별 혜택가로 만나보세요!\n1등 뷰티디바이스 할인",
+            "days_live": 0,
+            "url": ""
+          }
+        ]
+      }
+    ],
+    "media_stats": {
+      "image": {
+        "count": 2,
+        "total_days_live": 0,
+        "avg_days_live": 0.0
+      }
+    },
+    "platform_stats": {},
+    "timeline_stats": {
+      "very_recent": 2,
+      "recent": 0,
+      "medium": 0,
+      "long": 0,
+      "very_long": 0
+    },
+    "top_ads": [
+      {
+        "rank": 1,
+        "advertiser": "bit.ly/3AP0Nz5",
+        "ad_text": "✨메디큐브 부스터프로미니✨\n지금 올리브영에서 특별 혜택가로 만나보세요!\n1등 뷰티디바이스 할인",
+        "days_live": 0,
+        "start_date": "",
+        "media_type": "image",
+        "platforms": [],
+        "url": "https://www.facebook.com/ads/library/report/?source=nav-header"
+      },
+      {
+        "rank": 2,
+        "advertiser": "bit.ly/3AP0Nz5",
+        "ad_text": "✨메디큐브 부스터프로미니✨\n지금 올리브영에서 특별 혜택가로 만나보세요!\n1등 뷰티디바이스 할인",
+        "days_live": 0,
+        "start_date": "",
+        "media_type": "image",
+        "platforms": [],
+        "url": ""
+      }
+    ]
+  }
+}

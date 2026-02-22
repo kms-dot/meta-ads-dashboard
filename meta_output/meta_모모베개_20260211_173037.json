@@ -1,0 +1,29 @@
+{
+  "query": "모모베개",
+  "total_ads": 1,
+  "unique_ads": 1,
+  "crawl_date": "2026-02-11T17:30:37.277230",
+  "elapsed_seconds": 16.689638,
+  "ads": [
+    {
+      "advertiser": "인생꿀팁모음",
+      "ad_id": "1997919484471884",
+      "ad_library_url": "https://www.facebook.com/ads/library/?id=1997919484471884",
+      "thumbnail_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/584454232_1549080532960880_3619591639790191691_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=109&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=A0Kd9N3WeVsQ7kNvwFJC0Rf&_nc_oc=Adm2u8n1h7FvxDxQ4zf5Bpf3lyV1qice6sTDkOACXr-q1sAlXbI69v3lz_mk2WF9VdA&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=Oasr7H2cMPblDJCdSO1riA&oh=00_AfusyoMd9fYB0Ft5C5cVy5GL8B6NhTNH4di7T-lnOE0tfw&oe=699200F6",
+      "video_url": "",
+      "media_type": "image",
+      "ad_creative_image_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/587241486_834260125868017_1406875266409367943_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=C947zKQBMhEQ7kNvwHyDbGb&_nc_oc=Adn70zRdWE1SwlT-hYa1DYRf4EaudSDKuJiUmMYuLKqretdMDpgiEBWUMs6T9hrLG7E&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=Oasr7H2cMPblDJCdSO1riA&oh=00_AfseDCT36ejCZ1Ep9MhyWOC_zIub_jofZy9MgJydgG-7_Q&oe=6992294E",
+      "ad_text": "⚠️몰래하는 할인링크⚠️ 22차 완판맞이 팔린 모모베개 이 링크에서 몰래 이 가격에 드려요",
+      "impression_text": "",
+      "start_date_raw": "2025. 12. 4.에 게재 시작함",
+      "start_date": "2025-12-04",
+      "days_live": 69,
+      "status": "활성",
+      "platforms": [],
+      "query": "모모베개",
+      "platform": "meta_ad_library",
+      "rank": 1,
+      "crawl_date": "2026-02-11T17:30:26.651918"
+    }
+  ]
+}

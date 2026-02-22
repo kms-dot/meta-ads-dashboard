@@ -1,0 +1,84 @@
+name: Instagram Data Update + Viral Score
+
+# ───────────────────────────────────────────────
+# 스케줄
+#   매일 오전 12:00 KST → Meta 광고 수집 (daily_crawl.yml, 15:00 UTC)
+#   매일 오전  3:00 KST → Instagram 업데이트 (본 워크플로, 18:00 UTC)
+# ───────────────────────────────────────────────
+on:
+  schedule:
+    - cron: '0 18 * * *'   # 매일 03:00 KST (UTC+9 → UTC 18:00)
+  workflow_dispatch:        # 수동 실행 허용
+
+jobs:
+  instagram_update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      # 1) 소스 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # 전체 히스토리 (커밋 push 필요)
+
+      # 2) Python 설정
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # 3) 시스템 의존성 (Chrome)
+      - name: Install Chrome
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y google-chrome-stable
+
+      # 4) Python 패키지 설치
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install \
+            selenium \
+            webdriver-manager \
+            python-dotenv
+
+      # 5) meta_output/ 아티팩트 복원
+      #    (daily_crawl.yml 이 push 한 최신 meta 데이터를 pull)
+      - name: Pull latest meta_output from remote
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name  "GitHub Actions"
+          git pull origin main --rebase || true
+
+      # 6) Instagram 데이터 업데이트 실행
+      - name: Run instagram_updater.py
+        env:
+          IG_USERNAME: ${{ secrets.IG_USERNAME }}
+          IG_PASSWORD: ${{ secrets.IG_PASSWORD }}
+          LOG_LEVEL:   INFO
+        run: python instagram_updater.py
+
+      # 7) 결과 커밋 & 푸시
+      - name: Commit & push instagram_data.json
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name  "GitHub Actions"
+          git add meta_output/instagram_data.json \
+                  meta_output/instagram_update_*.log || true
+          git diff --cached --quiet || \
+            git commit -m "IG update $(date +'%Y-%m-%d %H:%M KST')"
+          git push origin main
+
+      # 8) 실패 시 슬랙 알림 (선택 — SLACK_WEBHOOK 시크릿 설정 시 활성화)
+      - name: Notify on failure
+        if: failure()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          if [ -n "$SLACK_WEBHOOK" ]; then
+            curl -s -X POST "$SLACK_WEBHOOK" \
+              -H 'Content-type: application/json' \
+              --data "{\"text\":\"⚠️ Instagram 업데이트 실패 — $(date +'%Y-%m-%d')\"}"
+          fi

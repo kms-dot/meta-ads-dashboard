@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta 광고 크롤링 대시보드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .refresh-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f0f4ff;
+            border-radius: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .category-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .category-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mini-stat {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mini-stat .label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .mini-stat .value {
+            color: #667eea;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .achievement {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .achievement.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .achievement.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+
+        .top-advertisers {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .top-advertisers h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .advertiser-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .advertiser-rank {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .advertiser-name {
+            flex: 1;
+            color: #333;
+        }
+
+        .advertiser-count {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .keywords-table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .keywords-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .keywords-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .keywords-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .keywords-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #f5c6cb;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Meta 광고 크롤링 대시보드</h1>
+            <div class="subtitle">실시간 크롤링 결과 모니터링</div>
+        </div>
+
+        <div class="refresh-info">
+            🔄 5초마다 자동 새로고침 | 마지막 업데이트: <span id="lastUpdate">-</span>
+        </div>
+
+        <div id="dashboard-content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>데이터를 불러오는 중...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let refreshInterval;
+
+        async function loadDashboard() {
+            try {
+                // 최신 파일 찾기
+                const response = await fetch('meta_output/meta_all_categories_20260211_134434.json');
+
+                if (!response.ok) {
+                    throw new Error('데이터 파일을 찾을 수 없습니다.');
+                }
+
+                const data = await response.json();
+                renderDashboard(data);
+
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('ko-KR');
+            } catch (error) {
+                document.getElementById('dashboard-content').innerHTML = `
+                    <div class="error">
+                        <h3>⚠️ 데이터를 불러올 수 없습니다</h3>
+                        <p>${error.message}</p>
+                        <p>크롤링 결과 파일이 있는지 확인해주세요: <code>meta_output/meta_all_categories_*.json</code></p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderDashboard(data) {
+            const results = data.results;
+            const categories = Object.keys(results);
+
+            // 전체 통계 계산
+            let totalAds = 0;
+            let totalAdvertisers = 0;
+
+            categories.forEach(cat => {
+                totalAds += results[cat].total_ads;
+                const analysis = results[cat].overall_analysis || {};
+                const summary = analysis.summary || {};
+                totalAdvertisers += summary.unique_advertisers || 0;
+            });
+
+            // 대시보드 HTML 생성
+            let html = `
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon">📊</div>
+                        <div class="label">총 광고 수</div>
+                        <div class="value">${totalAds.toLocaleString()}개</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📁</div>
+                        <div class="label">카테고리 수</div>
+                        <div class="value">${categories.length}개</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">👥</div>
+                        <div class="label">고유 광고주</div>
+                        <div class="value">${totalAdvertisers.toLocaleString()}개</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">🕐</div>
+                        <div class="label">크롤링 시간</div>
+                        <div class="value">${new Date(data.crawl_date).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}</div>
+                    </div>
+                </div>
+            `;
+
+            // 카테고리별 섹션
+            categories.forEach(catName => {
+                const catData = results[catName];
+                const analysis = catData.overall_analysis || {};
+                const summary = analysis.summary || {};
+                const advertiserStats = analysis.advertiser_stats || [];
+                const resultsByQuery = catData.results_by_query || {};
+
+                const target = 200;
+                const achievement = (catData.total_ads / target) * 100;
+                const isSuccess = achievement >= 100;
+
+                html += `
+                    <div class="category-section">
+                        <div class="category-header">
+                            <h2>📊 ${catName}</h2>
+                        </div>
+
+                        <div class="category-stats">
+                            <div class="mini-stat">
+                                <div class="label">광고 수</div>
+                                <div class="value">${catData.total_ads.toLocaleString()}개</div>
+                            </div>
+                            <div class="mini-stat">
+                                <div class="label">고유 광고주</div>
+                                <div class="value">${(summary.unique_advertisers || 0).toLocaleString()}개</div>
+                            </div>
+                            <div class="mini-stat">
+                                <div class="label">평균 라이브</div>
+                                <div class="value">${(summary.avg_days_live || 0).toFixed(1)}일</div>
+                            </div>
+                            <div class="mini-stat">
+                                <div class="label">성공 키워드</div>
+                                <div class="value">${Object.keys(resultsByQuery).filter(q => resultsByQuery[q].unique_ads > 0).length}개</div>
+                            </div>
+                        </div>
+
+                        <div class="achievement ${isSuccess ? 'success' : 'warning'}">
+                            ${isSuccess ? '✅' : '⚠️'} 목표 ${isSuccess ? '달성' : '진행 중'}: ${achievement.toFixed(0)}% (${catData.total_ads}/${target}개)
+                        </div>
+
+                        <div class="top-advertisers">
+                            <h3>🏆 상위 광고주 TOP 10</h3>
+                            ${advertiserStats.slice(0, 10).map((adv, idx) => `
+                                <div class="advertiser-item">
+                                    <div class="advertiser-rank">${idx + 1}</div>
+                                    <div class="advertiser-name">${adv.advertiser}</div>
+                                    <div class="advertiser-count">${adv.ad_count}개</div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="keywords-table">
+                            <h3 style="padding: 15px; color: #667eea;">📈 키워드별 수집 현황</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>키워드</th>
+                                        <th>수집</th>
+                                        <th>고유</th>
+                                        <th>소요시간</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${Object.entries(resultsByQuery)
+                                        .sort((a, b) => b[1].unique_ads - a[1].unique_ads)
+                                        .map(([query, result]) => `
+                                            <tr>
+                                                <td><strong>${query}</strong></td>
+                                                <td>${result.total_ads || 0}개</td>
+                                                <td>${result.unique_ads || 0}개</td>
+                                                <td>${(result.elapsed_seconds || 0).toFixed(0)}초</td>
+                                            </tr>
+                                        `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('dashboard-content').innerHTML = html;
+        }
+
+        // 초기 로드
+        loadDashboard();
+
+        // 5초마다 자동 새로고침
+        refreshInterval = setInterval(loadDashboard, 5000);
+    </script>
+</body>
+</html>

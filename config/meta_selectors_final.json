@@ -1,0 +1,74 @@
+{
+  "selectors": {
+    "ad_card": [
+      "//span[contains(text(), '게재 시작')]/ancestor::div[@class and contains(@class, 'x1plvlek')]",
+      "//span[contains(text(), '라이브러리 ID')]/ancestor::div[@class and contains(@class, 'x1plvlek')]",
+      "//div[contains(@class, 'x1plvlek') and contains(@class, 'xryxfnj')]"
+    ],
+    "advertiser": [
+      ".//a[contains(@href, 'facebook.com/') and not(contains(@href, '/ads/library')) and not(contains(@href, 'l.facebook.com'))]/span",
+      ".//a[contains(@href, 'facebook.com/') and not(contains(@href, '/ads/library')) and not(contains(@href, 'l.facebook.com'))]",
+      ".//img[@alt]"
+    ],
+    "ad_library_id": [
+      ".//span[contains(text(), '라이브러리 ID')]",
+      ".//span[contains(text(), 'Library ID')]"
+    ],
+    "start_date": [
+      ".//span[contains(text(), '게재 시작')]",
+      ".//span[contains(text(), 'Started running')]"
+    ],
+    "thumbnail": [
+      ".//img[contains(@src, 'scontent') and @alt]",
+      ".//img[contains(@class, '_8nqq')]",
+      ".//img[contains(@src, 'fbcdn')][@alt]"
+    ],
+    "ad_creative_image": [
+      ".//img[contains(@src, 'scontent') and not(@alt)]",
+      ".//img[contains(@class, 'x15mokao')]",
+      ".//a[@rel='nofollow']//img"
+    ],
+    "video": [
+      ".//video[@src]",
+      ".//video"
+    ],
+    "ad_text": [
+      ".//div[@style and contains(@style, 'white-space: pre-wrap')]//span",
+      ".//div[contains(@class, '_4ik4') and contains(@class, '_4ik5')]//span"
+    ],
+    "ad_link": [
+      ".//a[@rel='nofollow' and contains(@href, 'l.facebook.com')]",
+      ".//a[@data-lynx-mode='hover']"
+    ],
+    "platforms": [
+      ".//span[contains(text(), '플랫폼')]/following-sibling::div//div[contains(@class, 'xtwfq29')]",
+      ".//span[contains(text(), 'Platform')]/following-sibling::div//div[contains(@class, 'xtwfq29')]"
+    ],
+    "impression": [
+      ".//span[contains(text(), '노출수')]",
+      ".//span[contains(text(), 'Impressions')]"
+    ],
+    "status": [
+      ".//span[contains(text(), '활성')]",
+      ".//span[contains(text(), 'Active')]"
+    ]
+  },
+  "filter_keywords": {
+    "low_impression": ["적음", "low", "fewer", "less"],
+    "active_status": ["활성", "active", "running", "live", "게재 중"],
+    "inactive_status": ["종료", "ended", "inactive", "stopped"]
+  },
+  "date_patterns": {
+    "korean": "(?P<year>\\d{4})\\.\\s*(?P<month>\\d{1,2})\\.\\s*(?P<day>\\d{1,2})\\.",
+    "korean_alt": "(?P<year>\\d{4})년\\s*(?P<month>\\d{1,2})월\\s*(?P<day>\\d{1,2})일",
+    "english": "(?P<month>\\w+)\\s+(?P<day>\\d{1,2}),\\s*(?P<year>\\d{4})",
+    "iso": "(?P<year>\\d{4})-(?P<month>\\d{2})-(?P<day>\\d{2})"
+  },
+  "scroll_settings": {
+    "max_scrolls": 50,
+    "scroll_pause": 2,
+    "max_retries": 3,
+    "page_load_timeout": 10
+  },
+  "notes": "2025-02-11 실제 HTML 구조 분석 기반으로 생성. 클래스명이 아닌 구조/텍스트 기반 XPath 우선 사용."
+}

@@ -13,7 +13,9 @@
         "쿼드쎄라", "메디큐브에이지알", "메디큐브부스터프로"
       ],
       "crawl_platforms": ["naver", "coupang", "oliveyoung"],
-      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010014"
+      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010014",
+      "max_ads_per_query": 150,
+      "timeout_per_query": 600
     },
     "스킨케어": {
       "product_types": [
@@ -24,9 +26,13 @@
         "탄력", "리프팅", "기미", "주름", "팔자주름", "미간주름",
         "미백", "보습", "진정", "재생", "안티에이징"
       ],
-      "user_brands": [],
+      "user_brands": [
+        "메라블", "그린토마토앰플", "베리홉", "샤르드", "에스테리브"
+      ],
       "crawl_platforms": ["naver", "coupang", "oliveyoung"],
-      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010001"
+      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010001",
+      "max_ads_per_query": 150,
+      "timeout_per_query": 600
     },
     "헤어케어": {
       "product_types": [
@@ -37,9 +43,13 @@
       "function_keywords": [
         "탈모", "모발성장", "볼륨", "두피케어"
       ],
-      "user_brands": [],
+      "user_brands": [
+        "트리코닉스", "려탈모샴푸", "ts탈모샴푸", "닥터그루트", "닥터포헤어"
+      ],
       "crawl_platforms": ["naver", "coupang", "oliveyoung"],
-      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010009"
+      "oliveyoung_url": "https://www.oliveyoung.co.kr/store/display/getMCategoryList.do?dispCatNo=100000100010009",
+      "max_ads_per_query": 150,
+      "timeout_per_query": 600
     },
     "생활용품": {
       "product_types": [
@@ -49,9 +59,14 @@
         "메모리폼베개", "매트리스", "침대", "토퍼", "침구"
       ],
       "function_keywords": [],
-      "user_brands": [],
+      "user_brands": [
+        "템버베개", "깊은잠베개", "모모베개", "이브자리", "슬립앤슬립",
+        "수면공감", "기절베개", "일상공감", "디어커스"
+      ],
       "crawl_platforms": ["naver", "coupang"],
-      "oliveyoung_url": null
+      "oliveyoung_url": null,
+      "max_ads_per_query": 150,
+      "timeout_per_query": 600
     },
     "건강기능식품": {
       "product_types": [
@@ -65,10 +80,13 @@
       "user_brands": [
         "여에스더", "여에스더글루타치온", "플로리브", "칼로커트",
         "셀리트", "닥터블릿", "소우코우", "이소비텍신",
-        "푸드올로지", "푸드올로지빨간통", "푸드올로지파란통"
+        "푸드올로지", "푸드올로지빨간통", "푸드올로지파란통",
+        "아이틱스", "비비랩", "올록담"
       ],
       "crawl_platforms": ["naver", "coupang"],
-      "oliveyoung_url": null
+      "oliveyoung_url": null,
+      "max_ads_per_query": 150,
+      "timeout_per_query": 600
     }
   },
   "settings": {
@@ -77,6 +95,9 @@
     "search_keywords_limit": 5,
     "crawl_delay_min": 3,
     "crawl_delay_max": 7,
-    "max_retry": 3
+    "max_retry": 3,
+    "max_ads_per_query": 150,
+    "timeout_per_query": 600,
+    "min_ads_per_category": 200
   }
 }

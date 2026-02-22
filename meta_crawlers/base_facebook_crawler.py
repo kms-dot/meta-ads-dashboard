@@ -120,7 +120,8 @@ class BaseFacebookCrawler(ABC):
             try:
                 # XPath 자동 감지
                 if by_type == 'auto':
-                    if selector.startswith('//') or selector.startswith('(//'):
+                    # XPath 패턴: //, .// 또는 (//로 시작
+                    if selector.startswith('//') or selector.startswith('.//') or selector.startswith('(//'):
                         by = By.XPATH
                     else:
                         by = By.CSS_SELECTOR
@@ -160,7 +161,8 @@ class BaseFacebookCrawler(ABC):
             try:
                 # XPath 자동 감지
                 if by_type == 'auto':
-                    if selector.startswith('//') or selector.startswith('(//'):
+                    # XPath 패턴: //, .// 또는 (//로 시작
+                    if selector.startswith('//') or selector.startswith('.//') or selector.startswith('(//'):
                         by = By.XPATH
                     else:
                         by = By.CSS_SELECTOR

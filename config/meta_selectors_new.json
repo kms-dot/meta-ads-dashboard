@@ -1,0 +1,15 @@
+{
+  "selectors": {
+    "advertiser": [
+      ".//a[contains(@href, \"facebook.com/\")]"
+    ],
+    "thumbnail": [
+      ".//img[@alt]"
+    ],
+    "ad_card": [
+      "//a[contains(@href, \"/ads/library/?id=\")]/ancestor::div[3]",
+      "//div[@role=\"article\"]"
+    ]
+  },
+  "notes": "진단 스크립트로 생성된 설정 (구조 기반 XPath 우선)"
+}

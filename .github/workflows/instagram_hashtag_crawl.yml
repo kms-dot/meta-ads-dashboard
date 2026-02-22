@@ -1,0 +1,140 @@
+name: Instagram Hashtag Viral Content Crawl
+
+# ───────────────────────────────────────────────────
+# 스케줄 (KST 기준)
+#
+#   00:00 KST → Meta 광고 수집      (daily_crawl.yml,         15:00 UTC)
+#   03:00 KST → Instagram 성과 업데이트 (instagram_update.yml, 18:00 UTC)
+#   06:00 KST → IG 해시태그 크롤링  (본 워크플로,             21:00 UTC)
+# ───────────────────────────────────────────────────
+on:
+  schedule:
+    - cron: '0 21 * * *'    # 매일 06:00 KST (UTC+9 → UTC 21:00)
+  workflow_dispatch:
+    inputs:
+      category:
+        description: '특정 카테고리만 실행 (예: 뷰티디바이스). 비워두면 전체'
+        required: false
+        default: ''
+      dry_run:
+        description: '드라이런 (실제 크롤 없이 설정 확인)'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  hashtag_crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240     # 6개 카테고리 × 10태그 × 최대 20포스트 기준
+
+    steps:
+      # 1) 소스 체크아웃
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2) Python 3.11
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # 3) Chrome 설치
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y google-chrome-stable
+          google-chrome --version
+
+      # 4) Python 의존성
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install \
+            selenium \
+            webdriver-manager \
+            python-dotenv
+
+      # 5) 최신 meta_output 풀 (이전 크롤 결과 포함)
+      - name: Pull latest data from remote
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name  "GitHub Actions"
+          git pull origin main --rebase || true
+
+      # 6) 해시태그 크롤 실행
+      - name: Run Instagram hashtag crawler
+        env:
+          IG_USERNAME: ${{ secrets.IG_USERNAME }}
+          IG_PASSWORD: ${{ secrets.IG_PASSWORD }}
+          LOG_LEVEL:   INFO
+        run: |
+          CATEGORY_ARG=""
+          DRY_RUN_ARG=""
+
+          if [ -n "${{ github.event.inputs.category }}" ]; then
+            CATEGORY_ARG="--category ${{ github.event.inputs.category }}"
+          fi
+
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            DRY_RUN_ARG="--dry-run"
+          fi
+
+          python instagram_hashtag_crawler.py $CATEGORY_ARG $DRY_RUN_ARG
+
+      # 7) 결과 커밋 & 푸시
+      - name: Commit & push viral_posts.json
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name  "GitHub Actions"
+          git add \
+            meta_output/viral_posts.json \
+            meta_output/hashtag_crawl_*.log || true
+          git diff --cached --quiet || \
+            git commit -m "IG hashtag crawl $(date +'%Y-%m-%d %H:%M KST') — $(python -c "
+          import json, pathlib
+          f = pathlib.Path('meta_output/viral_posts.json')
+          d = json.loads(f.read_text(encoding='utf-8')) if f.exists() else {}
+          print(f\"{d.get('total_posts',0)}건\")
+          ")"
+          git push origin main
+
+      # 8) 실패 시 Slack 알림 (선택)
+      - name: Notify on failure
+        if: failure()
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        run: |
+          if [ -n "$SLACK_WEBHOOK" ]; then
+            curl -s -X POST "$SLACK_WEBHOOK" \
+              -H 'Content-type: application/json' \
+              --data "{\"text\":\"⚠️ IG 해시태그 크롤 실패 — $(date +'%Y-%m-%d')\"}"
+          fi
+
+      # 9) 수집 요약 출력 (Actions 로그)
+      - name: Print crawl summary
+        if: always()
+        run: |
+          python - <<'EOF'
+          import json, pathlib, sys
+          f = pathlib.Path("meta_output/viral_posts.json")
+          if not f.exists():
+              print("viral_posts.json 없음")
+              sys.exit(0)
+          d = json.loads(f.read_text(encoding="utf-8"))
+          print(f"=== 수집 요약 ===")
+          print(f"총 포스트: {d.get('total_posts', 0)}건")
+          print(f"카테고리:  {', '.join(d.get('categories', []))}")
+          print(f"업데이트:  {d.get('last_updated', '-')}")
+          posts = d.get("posts", [])
+          if posts:
+              top3 = posts[:3]
+              print(f"\n--- TOP 3 바이럴 ---")
+              for i, p in enumerate(top3, 1):
+                  print(f"  {i}. [{p.get('category')}] "
+                        f"#{p.get('hashtag')} "
+                        f"| 점수:{p.get('viral_score',0):,.0f} "
+                        f"| 👁️{p.get('instagram_views',0):,}")
+          EOF

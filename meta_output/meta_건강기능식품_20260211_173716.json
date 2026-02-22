@@ -1,0 +1,211 @@
+{
+  "crawl_date": "2026-02-11T17:37:16.245541",
+  "queries": [
+    "다이어트",
+    "다이어트보조제",
+    "다이어트영양제",
+    "수면영양제",
+    "키성장",
+    "먹는콜라겐",
+    "글루타치온",
+    "오메가3",
+    "여에스더",
+    "여에스더글루타치온",
+    "플로리브",
+    "칼로커트",
+    "셀리트",
+    "닥터블릿",
+    "소우코우",
+    "이소비텍신",
+    "푸드올로지",
+    "푸드올로지빨간통",
+    "푸드올로지파란통",
+    "아이틱스",
+    "비비랩",
+    "올록담"
+  ],
+  "country": "KR",
+  "total_ads": 0,
+  "results_by_query": {
+    "다이어트보조제": {
+      "query": "다이어트보조제",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.172273",
+      "elapsed_seconds": 0.012101,
+      "ads": []
+    },
+    "다이어트영양제": {
+      "query": "다이어트영양제",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.175641",
+      "elapsed_seconds": 0.001557,
+      "ads": []
+    },
+    "수면영양제": {
+      "query": "수면영양제",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.178293",
+      "elapsed_seconds": 0.001351,
+      "ads": []
+    },
+    "키성장": {
+      "query": "키성장",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.181915",
+      "elapsed_seconds": 0.002092,
+      "ads": []
+    },
+    "먹는콜라겐": {
+      "query": "먹는콜라겐",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.185266",
+      "elapsed_seconds": 0.001631,
+      "ads": []
+    },
+    "글루타치온": {
+      "query": "글루타치온",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.187532",
+      "elapsed_seconds": 0.001181,
+      "ads": []
+    },
+    "오메가3": {
+      "query": "오메가3",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.189811",
+      "elapsed_seconds": 0.001203,
+      "ads": []
+    },
+    "여에스더": {
+      "query": "여에스더",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.192147",
+      "elapsed_seconds": 0.001189,
+      "ads": []
+    },
+    "여에스더글루타치온": {
+      "query": "여에스더글루타치온",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.194623",
+      "elapsed_seconds": 0.001365,
+      "ads": []
+    },
+    "플로리브": {
+      "query": "플로리브",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.197824",
+      "elapsed_seconds": 0.001891,
+      "ads": []
+    },
+    "칼로커트": {
+      "query": "칼로커트",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.200810",
+      "elapsed_seconds": 0.001381,
+      "ads": []
+    },
+    "셀리트": {
+      "query": "셀리트",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.203218",
+      "elapsed_seconds": 0.001324,
+      "ads": []
+    },
+    "닥터블릿": {
+      "query": "닥터블릿",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.205503",
+      "elapsed_seconds": 0.001239,
+      "ads": []
+    },
+    "소우코우": {
+      "query": "소우코우",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.207935",
+      "elapsed_seconds": 0.001289,
+      "ads": []
+    },
+    "이소비텍신": {
+      "query": "이소비텍신",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.210173",
+      "elapsed_seconds": 0.001159,
+      "ads": []
+    },
+    "푸드올로지": {
+      "query": "푸드올로지",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.212897",
+      "elapsed_seconds": 0.001482,
+      "ads": []
+    },
+    "푸드올로지빨간통": {
+      "query": "푸드올로지빨간통",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.215325",
+      "elapsed_seconds": 0.001298,
+      "ads": []
+    },
+    "푸드올로지파란통": {
+      "query": "푸드올로지파란통",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.218299",
+      "elapsed_seconds": 0.00146,
+      "ads": []
+    },
+    "아이틱스": {
+      "query": "아이틱스",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.220606",
+      "elapsed_seconds": 0.001217,
+      "ads": []
+    },
+    "비비랩": {
+      "query": "비비랩",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.223392",
+      "elapsed_seconds": 0.001496,
+      "ads": []
+    },
+    "올록담": {
+      "query": "올록담",
+      "total_ads": 0,
+      "unique_ads": 0,
+      "crawl_date": "2026-02-11T17:37:14.226132",
+      "elapsed_seconds": 0.00146,
+      "ads": []
+    }
+  },
+  "overall_analysis": {
+    "summary": {
+      "total_ads": 0,
+      "unique_advertisers": 0,
+      "avg_days_live": 0
+    },
+    "advertiser_stats": [],
+    "media_stats": {},
+    "platform_stats": {},
+    "timeline_stats": {},
+    "top_ads": []
+  }
+}

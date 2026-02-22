@@ -1,0 +1,29 @@
+{
+  "query": "지루성두피샴푸",
+  "total_ads": 1,
+  "unique_ads": 1,
+  "crawl_date": "2026-02-11T16:50:40.827147",
+  "elapsed_seconds": 14.436793,
+  "ads": [
+    {
+      "advertiser": "메디큐브 - Medicube",
+      "ad_id": "1410311540886345",
+      "ad_library_url": "https://www.facebook.com/ads/library/?id=1410311540886345",
+      "thumbnail_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/629694670_1250736183622346_3986634738306178625_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=I0DFppuGcSEQ7kNvwHS05J-&_nc_oc=AdneRXYAF4o8X4hjh64rlq_oJdNA8Ve1Waze8VP5THXcBvVyoJh-B1gqHangzApXcYE&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=ZtJcpnC4a2CV-tSGEaJ0Yw&oh=00_AfunqDorcIs6iiabB2vtO6FgZ3SPYjVPDRFRqicQ47YKlg&oe=69920B03",
+      "video_url": "",
+      "media_type": "image",
+      "ad_creative_image_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/630894940_1429281965255127_318338850182605421_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=GS10sLAlbPEQ7kNvwGg3LbY&_nc_oc=AdnYDNlU1YGE3XSUG_dh41pqGLFUQEPTcRk_0cSgXu-lccZ-EA2hpOaxBOKubsgrQsA&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=ZtJcpnC4a2CV-tSGEaJ0Yw&oh=00_Afuyi8ErNdSA4E2pt6c_2EIY83CWd-Q72Ut83HAUNjV1Bw&oe=6991F7EF",
+      "ad_text": "📢메디큐브 설날+세일 맞이\n지루성두피샴푸 소이민트샴푸 1만원대 할인\n+샴푸브러쉬 추가 증정까지💚",
+      "impression_text": "",
+      "start_date_raw": "2026. 2. 8.에 게재 시작함",
+      "start_date": "2026-02-08",
+      "days_live": 3,
+      "status": "활성",
+      "platforms": [],
+      "query": "지루성두피샴푸",
+      "platform": "meta_ad_library",
+      "rank": 1,
+      "crawl_date": "2026-02-11T16:50:30.566334"
+    }
+  ]
+}

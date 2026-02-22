@@ -1,0 +1,48 @@
+{
+  "query": "피부관리기기",
+  "total_ads": 3,
+  "unique_ads": 2,
+  "crawl_date": "2026-02-11T13:31:46.261826",
+  "elapsed_seconds": 15.768268,
+  "ads": [
+    {
+      "advertiser": "𝓳ㅓᆫ문가",
+      "ad_id": "1555741979087170",
+      "ad_library_url": "https://www.facebook.com/ads/library/?id=1555741979087170",
+      "thumbnail_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/586034528_1558187331869418_8553078010288878579_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=adSd6_dHJOkQ7kNvwG9aBI0&_nc_oc=AdkBNoujN65ZztkZ48zTfiwqeHru-WDK1E4j7M3rCO-XCxfs8VIYvk91SE3EEAyQODk&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=Z8IiWRf-OsR3RyVk9lYiEg&oh=00_Afs05s0-tiE5ZjFnaZJnRnOvus_bffOLSolA-abHSMT5Ww&oe=6991DF9E",
+      "video_url": "",
+      "media_type": "image",
+      "ad_creative_image_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/590740485_832284792745973_1859506022910664670_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=105&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=C49fVg53JawQ7kNvwEky2Zw&_nc_oc=Adm9fRh-r8xt9PkVDqvRXOURsYdO6a_RJX0ZEM1orLnjYHUjL2FUPnGzc5Wy2ZbQExs&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=Z8IiWRf-OsR3RyVk9lYiEg&oh=00_AfsTcovJdJKdDOcGzfWqW0LIoiL6cNNQ1j69RFtoeXNfrg&oe=6991D508",
+      "ad_text": "광고",
+      "impression_text": "",
+      "start_date_raw": "2025. 11. 30.에 게재 시작함",
+      "start_date": "2025-11-30",
+      "days_live": 73,
+      "status": "활성",
+      "platforms": [],
+      "query": "피부관리기기",
+      "platform": "meta_ad_library",
+      "rank": 2,
+      "crawl_date": "2026-02-11T13:31:34.834189"
+    },
+    {
+      "advertiser": "VIEWTIS",
+      "ad_id": "1323684392468549",
+      "ad_library_url": "https://www.facebook.com/ads/library/?id=1323684392468549",
+      "thumbnail_url": "https://scontent-icn2-1.xx.fbcdn.net/v/t39.35426-6/571160445_833303736117505_2503131454817471409_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=108&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=V1iSfuY0-LoQ7kNvwFvWUWx&_nc_oc=AdlLufaB1DP3ykZeEzPhKiWQqccFacRLES3qEevKTzYK1K3nGv_6NhoAf7u6mnX_rfE&_nc_zt=14&_nc_ht=scontent-icn2-1.xx&_nc_gid=Z8IiWRf-OsR3RyVk9lYiEg&oh=00_AfuFsKFI9nWt7IGG641OmIxyRMPSn4UON78LorKoQzciwQ&oe=6991C694",
+      "video_url": "",
+      "media_type": "image",
+      "ad_text": "“30대, 피부관리 이제는 선택이 아닌 필수!”\n20대의 탄력과 생기를 그대로 유지하고 싶지만, 어느 순간부터 거칠어지고 탄력이 떨어지는 피부를 느끼셨나요?\n⠀\n알페이스 고주파마사지기는 30대 피부 고민에 딱 맞춘 홈케어 솔루션이에요.\n멀티코어 고주파로 피부 깊숙이 열 에너지를 전달해 탄력 개선과 순환 촉진을 도와주고,\n집에서도 동안 피부 관리를 가능하게 해줍니다.\n⠀\n하루 10분, 알페이스와 함께라면 바쁜 일상 속에서도 스스로를 위한 시간을 가질 수 있어요.\n피부에 광채를 더하고 싶은 30대라면 지금이 바로 시작할 때!\n⠀\n작은 습관의 차이가 1년 뒤, 5년 뒤의 피부를 바꿉니다. 💆‍♀️\n⠀\n#알페이스 #고주파마사지기 #홈케어필수템 #30대피부관리 #동안관리 #고주파마사지 #뷰티디바이스 #탄력케어 #피부관리기기 #셀프홈케어 #고주파리프팅",
+      "impression_text": "",
+      "start_date_raw": "2025. 10. 24.에 게재 시작함",
+      "start_date": "2025-10-24",
+      "days_live": 110,
+      "status": "활성",
+      "platforms": [],
+      "query": "피부관리기기",
+      "platform": "meta_ad_library",
+      "rank": 3,
+      "crawl_date": "2026-02-11T13:31:34.978058"
+    }
+  ]
+}
