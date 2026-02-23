@@ -16,8 +16,9 @@ Instagram 해시태그 크롤러 (바이럴 컨텐츠 수집)
 
 주의
 ----
-- IG_USERNAME / IG_PASSWORD (.env) 설정 시 로그인 모드 활성화
-- 비로그인 모드에서는 일부 수치가 제한될 수 있음
+- 로그인 없이 공개 해시태그에 직접 접근 (비로그인 모드 전용)
+- 일부 수치(좋아요 수 등)는 비로그인 시 제한될 수 있음
+- Instagram 로그인 팝업 자동 닫기 처리 포함
 - User-Agent 로테이션 + 딜레이로 차단 방지
 """
 
@@ -61,9 +62,7 @@ VIRAL_POSTS_FILE = OUTPUT_DIR / "viral_posts.json"
 # ─────────────────────────────────────────────────
 # 환경 변수
 # ─────────────────────────────────────────────────
-IG_USERNAME = os.getenv("IG_USERNAME", "")
-IG_PASSWORD = os.getenv("IG_PASSWORD", "")
-LOG_LEVEL   = os.getenv("LOG_LEVEL", "INFO")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 # ─────────────────────────────────────────────────
 # 로깅
@@ -182,50 +181,40 @@ def build_driver(headless: bool = True) -> webdriver.Chrome:
 # 팝업/배너 닫기
 # ─────────────────────────────────────────────────
 def dismiss_popups(driver: webdriver.Chrome):
-    """로그인 유도·쿠키 배너 닫기"""
-    selectors = [
+    """로그인 유도·쿠키 배너 닫기 (비로그인 모드 최적화)"""
+    # CSS 셀렉터 기반 닫기 버튼
+    css_selectors = [
+        "button._a9--._a9_1",                    # 로그인 모달 닫기
         "button[type='button'][class*='close']",
         "div[role='dialog'] button:last-of-type",
-        "button._a9--._a9_1",          # 로그인 모달 닫기 버튼
-        "//div[@role='dialog']//button[contains(text(),'나중에')]",
-        "//div[@role='dialog']//button[contains(text(),'Not Now')]",
     ]
-    for sel in selectors:
+    for sel in css_selectors:
         try:
-            if sel.startswith("//"):
-                el = driver.find_element(By.XPATH, sel)
-            else:
-                el = driver.find_element(By.CSS_SELECTOR, sel)
-            el.click()
-            time.sleep(0.8)
+            el = driver.find_element(By.CSS_SELECTOR, sel)
+            driver.execute_script("arguments[0].click();", el)
+            time.sleep(0.6)
         except Exception:
             continue
 
-
-# ─────────────────────────────────────────────────
-# Instagram 로그인
-# ─────────────────────────────────────────────────
-def ig_login(driver: webdriver.Chrome) -> bool:
-    if not IG_USERNAME or not IG_PASSWORD:
-        logger.info("IG 계정 미설정 → 비로그인 모드")
-        return False
-    try:
-        driver.get("https://www.instagram.com/accounts/login/")
-        wait = WebDriverWait(driver, 15)
-        wait.until(EC.presence_of_element_located(
-            (By.NAME, "username")
-        )).send_keys(IG_USERNAME)
-        driver.find_element(By.NAME, "password").send_keys(IG_PASSWORD)
-        driver.find_element(
-            By.CSS_SELECTOR, "button[type='submit']"
-        ).click()
-        time.sleep(5)
-        dismiss_popups(driver)
-        logger.info(f"Instagram 로그인 완료: {IG_USERNAME}")
-        return True
-    except Exception as e:
-        logger.warning(f"로그인 실패: {e}")
-        return False
+    # XPath 기반 (한국어/영어 버튼 텍스트)
+    xpath_buttons = [
+        "//div[@role='dialog']//button[contains(text(),'나중에')]",
+        "//div[@role='dialog']//button[contains(text(),'나중에 하기')]",
+        "//div[@role='dialog']//button[contains(text(),'Not Now')]",
+        "//button[contains(text(),'로그인 없이 계속')]",
+        "//button[contains(text(),'Continue without logging in')]",
+        "//button[contains(text(),'필수만 허용')]",
+        "//button[contains(text(),'모두 허용')]",
+        "//button[contains(text(),'동의')]",
+        "//div[contains(@class,'_aa_u')]//button",  # 앱 다운로드 배너
+    ]
+    for xpath in xpath_buttons:
+        try:
+            el = driver.find_element(By.XPATH, xpath)
+            driver.execute_script("arguments[0].click();", el)
+            time.sleep(0.6)
+        except Exception:
+            continue
 
 
 # ─────────────────────────────────────────────────
@@ -233,20 +222,51 @@ def ig_login(driver: webdriver.Chrome) -> bool:
 # ─────────────────────────────────────────────────
 def open_hashtag_page(driver: webdriver.Chrome,
                       hashtag: str) -> bool:
-    """https://www.instagram.com/explore/tags/{hashtag}/ 접속 후 최근 탭 선택"""
+    """https://www.instagram.com/explore/tags/{hashtag}/ 접속 후 최근 탭 선택
+    비로그인 모드: 로그인 리다이렉트 감지 시 팝업 닫고 재접속
+    """
     url = f"https://www.instagram.com/explore/tags/{hashtag}/"
     try:
         driver.get(url)
-        WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.TAG_NAME, "article"))
-        )
+        time.sleep(random.uniform(2.0, 3.0))
+
+        # ── 로그인 페이지 리다이렉트 처리 ──
+        if "accounts/login" in driver.current_url:
+            logger.debug(f"[{hashtag}] 로그인 리다이렉트 감지 → 팝업 닫고 재접속")
+            dismiss_popups(driver)
+            time.sleep(1.0)
+            driver.get(url)
+            time.sleep(random.uniform(2.5, 3.5))
+
+        # ── 로그인 모달/배너 닫기 ──
         dismiss_popups(driver)
+        time.sleep(0.8)
+
+        # ── 페이지 로드 확인 ──
+        try:
+            WebDriverWait(driver, 15).until(
+                EC.presence_of_element_located((By.TAG_NAME, "article"))
+            )
+        except TimeoutException:
+            # article 태그 없어도 main 영역 존재하면 진행
+            try:
+                WebDriverWait(driver, 5).until(
+                    EC.presence_of_element_located(
+                        (By.CSS_SELECTOR, "[role='main']")
+                    )
+                )
+                logger.debug(f"[{hashtag}] article 없음 → main 영역으로 진행")
+            except TimeoutException:
+                logger.warning(f"[{hashtag}] 페이지 로드 타임아웃")
+                return False
+
         time.sleep(random.uniform(1.5, 2.5))
 
-        # "최근 게시물" / "Recent" 탭 클릭
+        # ── 최근 탭 클릭 ──
         _click_recent_tab(driver)
         time.sleep(random.uniform(1.0, 1.8))
         return True
+
     except TimeoutException:
         logger.warning(f"[{hashtag}] 페이지 로드 타임아웃")
         return False
@@ -433,11 +453,10 @@ def scrape_post_detail(driver: webdriver.Chrome,
 # ─────────────────────────────────────────────────
 def _extract_likes(driver: webdriver.Chrome, rec: Dict):
     selectors = [
-        # 로그인 상태
+        # 비로그인 환경 셀렉터
         "section span[class*='x193iq5w']",
         "a[href*='liked_by'] span",
         "button[class*='like'] span",
-        # 비로그인 / 다른 패턴
         "//span[contains(@class,'_aacl')][contains(text(),'좋아요') or "
         "contains(text(),'like')]//preceding-sibling::span",
         "//button[@type='button']//span[contains(text(),'개')]",
@@ -670,9 +689,9 @@ def main():
             logger.info(f"  {cat}: {tags[:s.get('top_hashtags_per_category',10)]}")
         return
 
-    # Selenium 드라이버 시작
+    # Selenium 드라이버 시작 (비로그인 모드)
+    logger.info("비로그인 모드로 크롤러 시작")
     driver = build_driver(headless=headless)
-    logged_in = ig_login(driver)
 
     try:
         all_posts = run_all_categories(
